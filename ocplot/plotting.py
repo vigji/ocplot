@@ -1,5 +1,4 @@
 import numpy as np
-from em_reconstruction.plotting_utils.general import projection_contours
 from matplotlib import cm, colors
 from matplotlib import pyplot as plt
 

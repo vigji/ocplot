@@ -3,6 +3,8 @@ from ocplot.default_colors import *
 from ocplot.labels import *
 from ocplot.plotting import *
 from ocplot.stack_coloring import *
+from ocplot.axes_utils import *
+from ocplot.contours import *
 
 """
 from matplotlib import pyplot as plt

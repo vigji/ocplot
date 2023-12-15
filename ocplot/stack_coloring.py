@@ -3,7 +3,7 @@ and motions.color.
 """
 
 import numpy as np
-from em_reconstruction.plotting_utils.color_utils import (
+from ocplot.color_utils import (
     _get_categorical_colors,
     get_continuous_colors,
 )

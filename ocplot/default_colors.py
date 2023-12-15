@@ -1,9 +1,9 @@
-from em_reconstruction.plotting_utils.color_utils import get_n_colors
+from ocplot.color_utils import get_n_isoluminant_colors
 from matplotlib.colors import ListedColormap
 
 COLS = dict(
-    phase=ListedColormap(get_n_colors(1000, lum=45, sat=70, hshift=90) / 255),
-    phase_light=ListedColormap(get_n_colors(1000, lum=60, sat=45, hshift=90) / 255),
+    phase=ListedColormap(get_n_isoluminant_colors(1000, lum=45, sat=70, hshift=90) / 255),
+    phase_light=ListedColormap(get_n_isoluminant_colors(1000, lum=60, sat=45, hshift=90) / 255),
     isoluminant=[
         "#bf3f76",
         "#577b34",
