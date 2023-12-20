@@ -229,3 +229,96 @@ def bar_with_bars(
             solid_capstyle="round",
             zorder=100,
         )
+
+
+# TODO polish this
+def add_looming_triangle(ax, x_tip_pos, x_end_pos, x_end_stripe=None, y_pos=None, y_height=None,
+                         y_pos_fract=None,
+                         y_width_fract=None,
+                         text=None,
+                         text_kwargs={},
+                         **kwargs):
+    y0, y1 = ax.get_ylim()
+    x0, x1 = ax.get_xlim()
+
+    if x_end_stripe is None:
+        x_end_stripe = x1
+    plot_width = y1 - y0
+    print(plot_width)
+    if y_pos_fract is not None:
+        y_pos = y0 + plot_width * y_pos_fract
+    if y_width_fract is not None:
+        y_height = plot_width * y_width_fract
+    print(y_pos, y_height)
+    plot = ax.fill_between([x_tip_pos, x_end_pos, x_end_stripe], 
+                    [y_pos, y_pos-y_height/2, y_pos-y_height/2], 
+                    [y_pos, y_pos+y_height/2, y_pos+y_height/2], 
+                    **kwargs)
+    ax.set_xlim((x0, x1))
+    ax.set_ylim((y0, y1))
+
+    if "fontsize" not in text_kwargs.keys():
+        text_kwargs["fontsize"] = 8
+    if "color" not in text_kwargs.keys():
+        text_kwargs["color"] = ocp.shift_lum(plot.get_fc(), 0.5)
+
+    if text is not None:
+        ax.text(x_end_stripe, y_pos, text, ha="right", va="center", **text_kwargs)
+
+    return plot
+    
+def add_stim_bar(ax, xstart, xend=None, y_pos=None, y_height=None, 
+                    y_pos_fract=0.9, y_width_fract=0.1, 
+                    text=None,
+                    text_kwargs={},
+                    alpha=0.5,
+                    **kwargs):
+    """Add a bar to the axis to indicate stimulus time
+
+    Parameters
+    ----------
+    ax : plt.Axes
+        Axis to add bar to
+    xstart : float
+        Start of bar
+    xend : float, optional
+        End of the bar, if not the end of the plot
+    y_pos : float, optional
+        y position of the bar, by default None
+    y_height : float, optional
+        height of the bar, by default None
+    y_pos_fract : float, optional
+        vertical position of the bar, by default 0.9 of axis height
+    y_width_fract : float, optional
+        vertical size of the bar, by default 0.1 of axis height
+    """
+    y0, y1 = ax.get_ylim()
+    x0, x1 = ax.get_xlim()
+    if xend is None:
+        xend = x1
+    
+    plot_width = y1 - y0
+    if y_pos_fract is not None:
+        y_pos = y0 + plot_width * y_pos_fract
+    if y_width_fract is not None:
+        y_height = plot_width * y_width_fract
+    print(plot_width, y_pos, y_height)
+
+    kwargs["alpha"] = alpha
+    
+    plot = ax.fill_between([xstart, xend], 
+                    [y_pos-y_height/2, y_pos-y_height/2], 
+                    [y_pos+y_height/2, y_pos+y_height/2], 
+                    **kwargs)
+    ax.set_xlim((x0, x1))
+    ax.set_ylim((y0, y1))
+
+    if "fontsize" not in text_kwargs.keys():
+        text_kwargs["fontsize"] = 8
+    if "color" not in text_kwargs.keys():
+        text_kwargs["color"] = ocp.shift_lum(plot.get_fc(), 0.5)
+
+    if text is not None:
+        ax.text(xend, y_pos, text, ha="right", va="center", **text_kwargs)
+
+    return plot
