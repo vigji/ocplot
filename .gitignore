@@ -133,3 +133,5 @@ dmypy.json
 # dataset location file
 /dataset_location.txt
 /figures_location.txt
+
+*.DS_Store
